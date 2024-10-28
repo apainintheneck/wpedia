@@ -1,4 +1,4 @@
-package main
+package bubble
 
 // An example program demonstrating the pager component from the Bubbles
 // component library.
@@ -34,18 +34,18 @@ var (
 	}()
 )
 
-type model struct {
-	title    string
-	content  string
+type Model struct {
+	Title    string
+	Content  string
 	ready    bool
 	viewport viewport.Model
 }
 
-func (m model) Init() tea.Cmd {
+func (m Model) Init() tea.Cmd {
 	return nil
 }
 
-func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var (
 		cmd  tea.Cmd
 		cmds []tea.Cmd
@@ -71,7 +71,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.viewport = viewport.New(msg.Width, msg.Height-verticalMarginHeight)
 			m.viewport.YPosition = headerHeight
 			m.viewport.HighPerformanceRendering = useHighPerformanceRenderer
-			m.viewport.SetContent(m.content)
+			m.viewport.SetContent(m.Content)
 			m.ready = true
 
 			// This is only necessary for high performance rendering, which in
@@ -100,20 +100,20 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	return m, tea.Batch(cmds...)
 }
 
-func (m model) View() string {
+func (m Model) View() string {
 	if !m.ready {
 		return "\n  Initializing..."
 	}
 	return fmt.Sprintf("%s\n%s\n%s", m.headerView(), m.viewport.View(), m.footerView())
 }
 
-func (m model) headerView() string {
-	styledTitle := titleStyle.Render(m.title)
+func (m Model) headerView() string {
+	styledTitle := titleStyle.Render(m.Title)
 	line := strings.Repeat("─", max(0, m.viewport.Width-lipgloss.Width(styledTitle)))
 	return lipgloss.JoinHorizontal(lipgloss.Center, styledTitle, line)
 }
 
-func (m model) footerView() string {
+func (m Model) footerView() string {
 	info := infoStyle.Render(fmt.Sprintf("%3.f%%", m.viewport.ScrollPercent()*100))
 	line := strings.Repeat("─", max(0, m.viewport.Width-lipgloss.Width(info)))
 	return lipgloss.JoinHorizontal(lipgloss.Center, line, info)

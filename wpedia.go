@@ -5,6 +5,7 @@ import (
 	"os"
 	"strings"
 
+	tea "github.com/charmbracelet/bubbletea"
 	gowiki "github.com/trietmn/go-wiki"
 )
 
@@ -37,8 +38,8 @@ func main() {
 
 	indent := ""
 	lines := strings.Split(content, "\n")
+	var builder strings.Builder
 
-	fmt.Printf("= %s =\n", title)
 	for _, line := range lines {
 		line = strings.TrimSpace(line)
 		if len(line) == 0 {
@@ -58,6 +59,23 @@ func main() {
 			indent = "      "
 		}
 
-		fmt.Printf("\n%s%s\n", indent, line)
+		builder.WriteRune('\n')
+		builder.WriteString(indent)
+		builder.WriteString(line)
+		builder.WriteRune('\n')
+	}
+
+	p := tea.NewProgram(
+		model{
+			title:   title,
+			content: builder.String(),
+		},
+		tea.WithAltScreen(),       // use the full size of the terminal in its "alternate screen buffer"
+		tea.WithMouseCellMotion(), // turn on mouse support so we can track the mouse wheel
+	)
+
+	if _, err := p.Run(); err != nil {
+		fmt.Println("could not run program:", err)
+		os.Exit(1)
 	}
 }

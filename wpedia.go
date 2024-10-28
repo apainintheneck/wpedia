@@ -5,7 +5,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/apainintheneck/wpedia/bubble"
+	"github.com/apainintheneck/wpedia/model"
 	tea "github.com/charmbracelet/bubbletea"
 	gowiki "github.com/trietmn/go-wiki"
 )
@@ -67,10 +67,7 @@ func main() {
 	}
 
 	p := tea.NewProgram(
-		bubble.Model{
-			Title:   title,
-			Content: builder.String(),
-		},
+		model.New(title, builder.String()),
 		tea.WithAltScreen(),       // use the full size of the terminal in its "alternate screen buffer"
 		tea.WithMouseCellMotion(), // turn on mouse support so we can track the mouse wheel
 	)

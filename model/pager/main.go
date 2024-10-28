@@ -1,4 +1,4 @@
-package model
+package pager
 
 // An example program demonstrating the pager component from the Bubbles
 // component library.
@@ -26,18 +26,18 @@ var (
 	}()
 )
 
-type pagerModel struct {
-	title    string
-	content  string
+type Model struct {
+	Title    string
+	Content  string
 	ready    bool
 	viewport viewport.Model
 }
 
-func (m pagerModel) Init() tea.Cmd {
+func (m Model) Init() tea.Cmd {
 	return nil
 }
 
-func (m pagerModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 	var (
 		cmd  tea.Cmd
 		cmds []tea.Cmd
@@ -45,8 +45,11 @@ func (m pagerModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
-		if k := msg.String(); k == "ctrl+c" || k == "q" || k == "esc" {
-			return m, tea.Quit
+		switch msg.String() {
+		case "q", "ctrl+c", "esc":
+			m.Title = ""
+			m.Content = ""
+			return m, nil
 		}
 
 	case tea.WindowSizeMsg:
@@ -62,7 +65,7 @@ func (m pagerModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			// here.
 			m.viewport = viewport.New(msg.Width, msg.Height-verticalMarginHeight)
 			m.viewport.YPosition = headerHeight
-			m.viewport.SetContent(m.content)
+			m.viewport.SetContent(m.Content)
 			m.ready = true
 
 			// This is only necessary for high performance rendering, which in
@@ -83,20 +86,20 @@ func (m pagerModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	return m, tea.Batch(cmds...)
 }
 
-func (m pagerModel) View() string {
+func (m Model) View() string {
 	if !m.ready {
 		return "\n  Initializing..."
 	}
 	return fmt.Sprintf("%s\n%s\n%s", m.headerView(), m.viewport.View(), m.footerView())
 }
 
-func (m pagerModel) headerView() string {
-	styledTitle := titleStyle.Render(m.title)
+func (m Model) headerView() string {
+	styledTitle := titleStyle.Render(m.Title)
 	line := strings.Repeat("─", max(0, m.viewport.Width-lipgloss.Width(styledTitle)))
 	return lipgloss.JoinHorizontal(lipgloss.Center, styledTitle, line)
 }
 
-func (m pagerModel) footerView() string {
+func (m Model) footerView() string {
 	info := infoStyle.Render(fmt.Sprintf("%3.f%%", m.viewport.ScrollPercent()*100))
 	line := strings.Repeat("─", max(0, m.viewport.Width-lipgloss.Width(info)))
 	return lipgloss.JoinHorizontal(lipgloss.Center, line, info)

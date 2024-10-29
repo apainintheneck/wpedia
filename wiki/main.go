@@ -18,6 +18,7 @@ func FetchContent(title string) string {
 		fmt.Println(err)
 	}
 
+	header := ""
 	indent := ""
 	lines := strings.Split(content, "\n")
 	var builder strings.Builder
@@ -35,10 +36,20 @@ func FetchContent(title string) string {
 		switch {
 		case strings.HasPrefix(line, "== "):
 			indent = "  "
+			header = line
+			continue
 		case strings.HasPrefix(line, "=== "):
 			indent = "    "
 		case strings.HasPrefix(line, "==== "):
 			indent = "      "
+		}
+
+		if header != "" {
+			builder.WriteRune('\n')
+			builder.WriteString("  ")
+			builder.WriteString(header)
+			builder.WriteRune('\n')
+			header = ""
 		}
 
 		builder.WriteRune('\n')

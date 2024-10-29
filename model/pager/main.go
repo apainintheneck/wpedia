@@ -49,6 +49,7 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 		case "q", "ctrl+c", "esc":
 			m.Title = ""
 			m.Content = ""
+			m.ready = false
 			return m, nil
 		}
 

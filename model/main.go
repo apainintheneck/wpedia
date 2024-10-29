@@ -44,8 +44,10 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	if title := m.list.Choice; title != "" {
 		m.isList = false
-		m.pager.Title = title
-		m.pager.Content = wiki.FetchContent(title)
+		m.pager = pager.Model{
+			Title:   title,
+			Content: wiki.FetchContent(title),
+		}
 		cmd = tea.WindowSize()
 	}
 

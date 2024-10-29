@@ -25,12 +25,8 @@ func FetchContent(title string) string {
 
 	for _, line := range lines {
 		line = strings.TrimSpace(line)
-		if len(line) == 0 {
+		if line == "" {
 			continue
-		}
-
-		if line == "== See also ==" || line == "== References ==" {
-			break
 		}
 
 		switch {

@@ -1,8 +1,8 @@
 package main
 
 import (
+	"flag"
 	"log"
-	"os"
 	"strings"
 
 	"github.com/apainintheneck/wpedia/model"
@@ -13,7 +13,12 @@ import (
 const maxSearchResults = 50
 
 func main() {
-	searchTerm := strings.Join(os.Args[1:], " ")
+	languagePtr := flag.String("l", "en", "2 digit language code")
+	flag.Parse()
+
+	gowiki.SetLanguage(*languagePtr)
+
+	searchTerm := strings.Join(flag.Args(), " ")
 	var searchResults []string
 	var err error
 

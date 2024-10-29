@@ -1,5 +1,7 @@
 package list
 
+// Based off: https://github.com/charmbracelet/bubbletea/blob/deb8bf354f8eac1ed70d71c842f78e306933083a/examples/list-simple/main.go
+
 import (
 	"fmt"
 	"io"

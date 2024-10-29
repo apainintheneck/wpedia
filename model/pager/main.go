@@ -1,7 +1,6 @@
 package pager
 
-// An example program demonstrating the pager component from the Bubbles
-// component library.
+// Based off: https://github.com/charmbracelet/bubbletea/blob/deb8bf354f8eac1ed70d71c842f78e306933083a/examples/pager/main.go
 
 import (
 	"fmt"

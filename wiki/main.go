@@ -10,12 +10,12 @@ import (
 func FetchContent(title string) string {
 	page, err := gowiki.GetPage(title, -1, false, true)
 	if err != nil {
-		log.Fatal("Error: Unable to fetch wikipedia article\n\n", err)
+		log.Fatal("Error: Unable to fetch wikipedia article\n  | ", err)
 	}
 
 	content, err := page.GetContent()
 	if err != nil {
-		log.Fatal("Error: Unable to fetch wikipedia article content\n\n", err)
+		log.Fatal("Error: Unable to fetch wikipedia article content\n  |", err)
 	}
 
 	header := ""

@@ -30,7 +30,7 @@ func main() {
 	}
 
 	if err != nil {
-		log.Fatal("Error: Unable to search for wikipedia articles\n\n", err)
+		log.Fatal("Error: Unable to search for wikipedia articles\n  | ", err)
 	}
 
 	p := tea.NewProgram(
@@ -40,6 +40,6 @@ func main() {
 	)
 
 	if _, err := p.Run(); err != nil {
-		log.Fatal("Error: Unexpected error program error\n\n", err)
+		log.Fatal("Error: Unexpected error program error\n  | ", err)
 	}
 }

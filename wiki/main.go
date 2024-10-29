@@ -1,7 +1,7 @@
 package wiki
 
 import (
-	"fmt"
+	"log"
 	"strings"
 
 	gowiki "github.com/trietmn/go-wiki"
@@ -10,12 +10,12 @@ import (
 func FetchContent(title string) string {
 	page, err := gowiki.GetPage(title, -1, false, true)
 	if err != nil {
-		fmt.Println(err)
+		log.Fatal("Error: Unable to fetch wikipedia article\n\n", err)
 	}
 
 	content, err := page.GetContent()
 	if err != nil {
-		fmt.Println(err)
+		log.Fatal("Error: Unable to fetch wikipedia article content\n\n", err)
 	}
 
 	header := ""

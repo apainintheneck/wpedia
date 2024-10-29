@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"os"
 	"strings"
 
@@ -25,7 +25,7 @@ func main() {
 	}
 
 	if err != nil {
-		fmt.Println(err)
+		log.Fatal("Error: Unable to search for wikipedia articles\n\n", err)
 	}
 
 	p := tea.NewProgram(
@@ -35,7 +35,6 @@ func main() {
 	)
 
 	if _, err := p.Run(); err != nil {
-		fmt.Println("could not run program:", err)
-		os.Exit(1)
+		log.Fatal("Error: Unexpected error program error\n\n", err)
 	}
 }

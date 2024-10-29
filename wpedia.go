@@ -18,6 +18,7 @@ func main() {
 	var err error
 
 	if searchTerm == "" {
+		searchTerm = "Random"
 		searchResults, err = gowiki.GetRandom(maxSearchResults)
 	} else {
 		searchResults, _, err = gowiki.Search(searchTerm, maxSearchResults, false)

@@ -67,12 +67,6 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 			m.viewport.YPosition = headerHeight
 			m.viewport.SetContent(m.Content)
 			m.ready = true
-
-			// This is only necessary for high performance rendering, which in
-			// most cases you won't need.
-			//
-			// Render the viewport one line below the header.
-			m.viewport.YPosition = headerHeight + 1
 		} else {
 			m.viewport.Width = msg.Width
 			m.viewport.Height = msg.Height - verticalMarginHeight

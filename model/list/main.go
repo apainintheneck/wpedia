@@ -64,7 +64,11 @@ func New(term string, choices []string) Model {
 	const defaultWidth = 80
 
 	l := list.New(items, itemDelegate{}, defaultWidth, listHeight)
-	l.Title = "Search: " + term
+	if term == "" {
+		l.Title = "Random:"
+	} else {
+		l.Title = "Search: " + term
+	}
 	l.SetShowStatusBar(false)
 	l.SetFilteringEnabled(false)
 	l.Styles.Title = titleStyle

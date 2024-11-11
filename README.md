@@ -79,7 +79,7 @@ $ wpedia
 ```
 
 ```
-    Search: Random
+    Random:
 
     1. Herbert Clifford Serasinghe
     2. Hamilton Island Cup
